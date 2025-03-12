@@ -1,0 +1,76 @@
+.drop-down-style {
+  width: 200px;
+  height: 36px;
+  margin: 20px;
+  padding-left: 15px;
+}
+
+.pat-container-style {
+  width: 84%;
+  height: 622px;
+  position: relative;
+  left: 8%;
+  top: 62px;
+  background-color: rgb(173, 151, 151);
+  border-radius: 6px;
+  border: 2px solid grey;
+}
+
+.popup-div-style {
+  display: none;
+  position: absolute;
+  width: 87%;
+  left: 8%;
+  top: 62px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 6px;
+  border: 2px solid rgb(0, 0, 0);
+  height: 47%;
+}
+.popup-div-style div {
+  margin: 10px 0;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.popup-div-style div:hover {
+  background-color: #5a5a5a;
+  transform: scale(1.05);
+}
+
+/* Styles for Shapes */
+.triangle-shape {
+  width: 0;
+  height: 0;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-bottom: 60px solid #3498db;
+  margin: 10px auto;
+}
+
+.square-shape {
+  width: 60px;
+  height: 60px;
+  background-color: #e74c3c;
+  margin: 10px auto;
+}
+
+.rectangle-shape {
+  width: 100px;
+  height: 60px;
+  background-color: #2ecc71;
+  margin: 10px auto;
+}
+
+.rhombus-shape {
+  width: 60px;
+  height: 60px;
+  background-color: #f39c12;
+  transform: rotate(45deg);
+  margin: 10px auto;
+}
