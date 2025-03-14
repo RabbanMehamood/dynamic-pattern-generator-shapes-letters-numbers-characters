@@ -5,86 +5,13 @@ const popUpObject = [
     shape: ["Triangle", "Square", "Rectangle", "Rhombus"],
   },
   {
-    alphabets: [
-      "A",
-      "B",
-      "C",
-      "D",
-      "E",
-      "F",
-      "G",
-      "H",
-      "I",
-      "J",
-      "K",
-      "L",
-      "M",
-      "N",
-      "O",
-      "P",
-      "Q",
-      "R",
-      "S",
-      "T",
-      "U",
-      "V",
-      "W",
-      "X",
-      "Y",
-      "Z",
-      "a",
-      "b",
-      "c",
-      "d",
-      "e",
-      "f",
-      "g",
-      "h",
-      "i",
-      "j",
-      "k",
-      "l",
-      "m",
-      "n",
-      "o",
-      "p",
-      "q",
-      "r",
-      "s",
-      "t",
-      "u",
-      "v",
-      "w",
-      "x",
-      "y",
-      "z",
-    ],
+    alphabets: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".split(""),
   },
   {
-    characters: [
-      "!",
-      "@",
-      "#",
-      "$",
-      "%",
-      "^",
-      "&",
-      "*",
-      "(",
-      ")",
-      "-",
-      "_",
-      "=",
-      "+",
-      "{",
-      "}",
-      "[",
-      "]",
-      "|",
-    ],
+    characters: "!@#$%^&*()-_=+{}[]|".split(""),
   },
   {
-    numbers: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+    numbers: "0123456789".split(""),
   },
 ];
 
@@ -115,6 +42,10 @@ const patternObject = [
 
 const dropDownsDiv = document.createElement("div");
 const selectShapeDropDown = document.createElement("select");
+let heading = document.createElement("h2");
+heading.textContent =
+  "Select Shape,Character,Alphabet Or Number To Generate Pattern In The Below Area";
+heading.style.textAlign = "center";
 
 for (let i = 0; i < dropDownValuesShape.length; i++) {
   let optionEl = document.createElement("option");
@@ -128,11 +59,16 @@ dropDownsDiv.appendChild(selectShapeDropDown);
 
 let userInput = document.createElement("input");
 userInput.setAttribute("type", "number");
+
 userInput.classList.add("drop-down-style");
 userInput.setAttribute("value", "2");
+userInput.setAttribute("min", "2");
+userInput.setAttribute("max", "10");
 dropDownsDiv.appendChild(userInput);
 
 document.body.appendChild(dropDownsDiv);
+document.body.appendChild(heading);
+
 let patternContainer = document.createElement("div");
 patternContainer.setAttribute("id", "patternContainer");
 patternContainer.classList.add("pat-container-style");
@@ -147,8 +83,10 @@ selectShapeDropDown.addEventListener("change", (event) => {
   if (existingPatternDropDown) {
     existingPatternDropDown.remove();
   }
-
-  if (!document.querySelector(".pattern-drop-down")) {
+  if (
+    userSelectedValue === "Shape" &&
+    !document.querySelector(".pattern-drop-down")
+  ) {
     const patternDropDown = document.createElement("select");
     patternDropDown.classList.add("pattern-drop-down", "drop-down-style");
 
@@ -159,11 +97,8 @@ selectShapeDropDown.addEventListener("change", (event) => {
       patternDropDown.appendChild(optionEl);
     }
 
-    showPopUp(userSelectedValue);
-
     patternDropDown.addEventListener("change", (event) => {
-      const patternValue = event.target.value;
-      selectShapePattern(patternValue);
+      selectShapePattern(event.target.value);
     });
 
     dropDownsDiv.appendChild(patternDropDown);
@@ -207,25 +142,32 @@ function selectShapePattern(value) {
 }
 
 function showPopUp(value) {
-  let userValue = value;
-
+  let userValue = value.toLowerCase();
+  if (document.getElementById("popUpDiv")) {
+    document.getElementById("popUpDiv").remove();
+  }
   const popUpDiv = document.createElement("div");
-  popUpDiv.setAttribute("id", "popUpdiv");
+  popUpDiv.setAttribute("id", "popUpDiv");
   popUpDiv.classList.add("popup-div-style");
   popUpDiv.innerHTML = "";
 
-  let popUpList = popUpObject.filter((item) => item[userValue]);
-  if (popUpList.length !== 0) {
-    popUpList = popUpList[0][userValue];
-  }
+  const popUpDivContent = document.createElement("div");
+  popUpDivContent.setAttribute("id", "popUpDivContent");
+  popUpDivContent.classList.add("pop-up-flex");
+
+  let popUpList = popUpObject.find((item) => item.hasOwnProperty(userValue));
+  popUpList = popUpList[userValue];
 
   if (userValue !== "shapes") {
     for (let item of popUpList) {
       let childDiv = document.createElement("div");
       childDiv.textContent = `${item}`;
-      popUpDiv.appendChild(childDiv);
+      childDiv.setAttribute("id", `${item}`);
+      childDiv.setAttribute("value", `${item}`);
+      childDiv.classList.add("child-div");
+      popUpDivContent.appendChild(childDiv);
     }
-  } else {
+  } else if (userValue === "shapes") {
     for (let item of popUpList) {
       let childDiv = document.createElement("div");
       childDiv.setAttribute("id", `${item}`);
@@ -238,11 +180,26 @@ function showPopUp(value) {
       } else if (item === "Rhombus") {
         childDiv.classList.add("rhombus-shape");
       }
-
-      popUpDiv.appendChild(childDiv);
+      childDiv.classList.add("child-div");
+      popUpDivContent.appendChild(childDiv);
     }
   }
+  popUpDiv.appendChild(popUpDivContent);
   popUpDiv.style.display = "block";
 
   document.body.appendChild(popUpDiv);
 }
+
+const popUpDivValue = document.getElementById("popUpDivContent");
+popUpDivValue.addEventListener("click", (event) => {
+  if (event.target && event.target.classList.contains("child-div")) {
+    let value = event.target.getAttribute("value");
+    console.log(value);
+    event.stopPropagation();
+    document.getElementById("popUpDiv").style.display = "none";
+  }
+});
+
+document.getElementById("popUpDiv").addEventListener("click", () => {
+  document.getElementById("popUpDiv").style.display = "none";
+});
