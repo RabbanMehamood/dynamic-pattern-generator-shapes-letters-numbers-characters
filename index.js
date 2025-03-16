@@ -125,8 +125,9 @@ function showPopUp(value) {
     event.stopPropagation();
     if (event.target && event.target.classList.contains("child-div")) {
       let value = event.target.getAttribute("value");
-      userChoseValue["firstSACNInput"] = value;
+      userChoseValue["shapeContent"] = value;
     }
+    popUpDiv.style.display = "none";
   });
 
   popUpDiv.style.display = "block";
@@ -162,7 +163,7 @@ selectShapeDropDown.addEventListener("change", (event) => {
     patternDropDown.addEventListener("change", (event) => {
       const patternValue = event.target.value;
       userChoseValue["shape"] = patternValue;
-      userChoseValue["Number"] = userInputNumberEl.value;
+      userChoseValue["number"] = userInputNumberEl.value;
       selectShapePattern(patternValue);
     });
 
