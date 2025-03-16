@@ -55,8 +55,18 @@ body {
   font-weight: bold;
   color: rgb(0, 0, 0);
   cursor: pointer;
-  padding: 10px;
   transition: transform 0.3s, background-color 0.3s;
+}
+.pad-to {
+  padding: 10px;
+}
+
+.big-main-div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center; /* Center the content horizontally */
 }
 
 .child-div:hover {
@@ -64,34 +74,130 @@ body {
   transform: scale(1.05);
 }
 
-/* Styles for Shapes */
 .triangle-shape {
   width: 0;
   height: 0;
-  border-left: 30px solid transparent;
-  border-right: 30px solid transparent;
-  border-bottom: 60px solid #3498db;
-  margin: 10px auto;
+  border-left: 24px solid transparent;
+  border-right: 24px solid transparent;
+  border-bottom: 48px solid #3498db;
+}
+
+.inverted-triangle-shape {
+  width: 0;
+  height: 0;
+  border-left: 24px solid transparent;
+  border-right: 24px solid transparent;
+  border-top: 48px solid red;
+}
+
+.left-triangle-shape {
+  width: 0;
+  height: 0;
+  border-top: 24px solid transparent;
+  border-bottom: 24px solid transparent;
+  border-right: 48px solid blue;
+}
+
+.right-triangle-shape {
+  width: 0;
+  height: 0;
+  border-top: 24px solid transparent;
+  border-bottom: 24px solid transparent;
+  border-left: 48px solid green;
+}
+
+.half-triangle-shape {
+  width: 0;
+  height: 0;
+  border-left: 47px solid transparent;
+  border-bottom: 48px solid purple;
+}
+
+.full-circle-shape {
+  width: 48px;
+  height: 48px;
+  background: orange;
+  border-radius: 50%;
+}
+
+.half-circle-shape {
+  width: 60px;
+  height: 30px;
+  background: yellow;
+  border-radius: 100px 100px 0 0;
+}
+
+.reverse-half-circle-shape {
+  width: 60px;
+  height: 30px;
+  background: pink;
+  border-radius: 0 0 100px 100px;
+}
+
+.right-half-circle-shape {
+  width: 30px;
+  height: 60px;
+  background: cyan;
+  border-radius: 0 100px 100px 0;
+}
+
+.left-half-circle-shape {
+  width: 30px;
+  height: 60px;
+  background: magenta;
+  border-radius: 100px 0 0 100px;
+}
+
+.quarter-circle-1st-shape {
+  width: 50px;
+  height: 50px;
+  background: teal;
+  border-radius: 100px 0 0 0;
+}
+
+.quarter-circle-2nd-shape {
+  width: 50px;
+  height: 50px;
+  background: olive;
+  border-radius: 0 100px 0 0;
+}
+
+.quarter-circle-3rd-shape {
+  width: 50px;
+  height: 50px;
+  background: gray;
+  border-radius: 0 0 100px 0;
+}
+
+.quarter-circle-4th-shape {
+  width: 50px;
+  height: 50px;
+  background: brown;
+  border-radius: 0 0 0 100px;
 }
 
 .square-shape {
   width: 60px;
   height: 60px;
-  background-color: #e74c3c;
-  margin: 10px auto;
+  background: black;
 }
 
-.rectangle-shape {
-  width: 100px;
+.hollow-square-shape {
+  width: 60px;
   height: 60px;
-  background-color: #2ecc71;
-  margin: 10px auto;
+  border: 3px solid black;
+}
+
+.rotated-square-shape {
+  width: 60px;
+  height: 60px;
+  background: blue;
+  transform: rotate(45deg);
 }
 
 .rhombus-shape {
   width: 60px;
   height: 60px;
-  background-color: #f39c12;
-  transform: rotate(45deg);
-  margin: 10px auto;
+  background: purple;
+  transform: skew(20deg, 20deg);
 }

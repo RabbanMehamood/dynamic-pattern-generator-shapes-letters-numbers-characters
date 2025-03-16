@@ -1,8 +1,27 @@
-const dropDownValuesShape = ["Shape", "Alphabets", "Characters", "Numbers"];
+const dropDownValuesShape = ["Shapes", "Alphabets", "Characters", "Numbers"];
 
 const popUpObject = [
   {
-    shape: ["Triangle", "Square", "Rectangle", "Rhombus"],
+    shapes: [
+      "triangle",
+      "inverted-triangle",
+      "left-triangle",
+      "right-triangle",
+      "half-triangle",
+      "full-circle",
+      "half-circle",
+      "reverse-half-circle",
+      "right-half-circle",
+      "left-half-circle",
+      "quarter-circle-1st",
+      "quarter-circle-2nd",
+      "quarter-circle-3rd",
+      "quarter-circle-4th",
+      "square",
+      "hollow-square",
+      "rotated-square",
+      "rhombus",
+    ],
   },
   {
     alphabets: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".split(""),
@@ -99,7 +118,7 @@ function showPopUp(value) {
       childDiv.textContent = `${item}`;
       childDiv.setAttribute("id", `${item}`);
       childDiv.setAttribute("value", `${item}`);
-      childDiv.classList.add("child-div");
+      childDiv.classList.add("child-div", "pad-to");
       popUpDivContent.appendChild(childDiv);
     }
   } else if (userValue === "shapes") {
@@ -107,13 +126,41 @@ function showPopUp(value) {
       let childDiv = document.createElement("div");
       childDiv.setAttribute("id", `${item}`);
       childDiv.setAttribute("value", `${item}`);
-      if (item === "Triangle") {
+      if (item === "triangle") {
         childDiv.classList.add("triangle-shape");
-      } else if (item === "Square") {
+      } else if (item === "inverted-triangle") {
+        childDiv.classList.add("inverted-triangle-shape");
+      } else if (item === "left-triangle") {
+        childDiv.classList.add("left-triangle-shape");
+      } else if (item === "right-triangle") {
+        childDiv.classList.add("right-triangle-shape");
+      } else if (item === "half-triangle") {
+        childDiv.classList.add("half-triangle-shape");
+      } else if (item === "full-circle") {
+        childDiv.classList.add("full-circle-shape");
+      } else if (item === "half-circle") {
+        childDiv.classList.add("half-circle-shape");
+      } else if (item === "reverse-half-circle") {
+        childDiv.classList.add("reverse-half-circle-shape");
+      } else if (item === "right-half-circle") {
+        childDiv.classList.add("right-half-circle-shape");
+      } else if (item === "left-half-circle") {
+        childDiv.classList.add("left-half-circle-shape");
+      } else if (item === "quarter-circle-1st") {
+        childDiv.classList.add("quarter-circle-1st-shape");
+      } else if (item === "quarter-circle-2nd") {
+        childDiv.classList.add("quarter-circle-2nd-shape");
+      } else if (item === "quarter-circle-3rd") {
+        childDiv.classList.add("quarter-circle-3rd-shape");
+      } else if (item === "quarter-circle-4th") {
+        childDiv.classList.add("quarter-circle-4th-shape");
+      } else if (item === "square") {
         childDiv.classList.add("square-shape");
-      } else if (item === "Rectangle") {
-        childDiv.classList.add("rectangle-shape");
-      } else if (item === "Rhombus") {
+      } else if (item === "hollow-square") {
+        childDiv.classList.add("hollow-square-shape");
+      } else if (item === "rotated-square") {
+        childDiv.classList.add("rotated-square-shape");
+      } else if (item === "rhombus") {
         childDiv.classList.add("rhombus-shape");
       }
       childDiv.classList.add("child-div");
