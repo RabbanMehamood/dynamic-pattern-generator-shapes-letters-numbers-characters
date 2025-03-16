@@ -40,6 +40,7 @@ const patternObject = [
   { Rhombus: ["Filled Rhombus", "Hollow Rhombus"] },
 ];
 
+let userChoseValue = new Object();
 const dropDownsDiv = document.createElement("div");
 const selectShapeDropDown = document.createElement("select");
 let heading = document.createElement("h2");
@@ -57,14 +58,13 @@ for (let i = 0; i < dropDownValuesShape.length; i++) {
 selectShapeDropDown.classList.add("drop-down-style");
 dropDownsDiv.appendChild(selectShapeDropDown);
 
-let userInput = document.createElement("input");
-userInput.setAttribute("type", "number");
-
-userInput.classList.add("drop-down-style");
-userInput.setAttribute("value", "2");
-userInput.setAttribute("min", "2");
-userInput.setAttribute("max", "10");
-dropDownsDiv.appendChild(userInput);
+let userInputNumberEl = document.createElement("input");
+userInputNumberEl.setAttribute("type", "number");
+userInputNumberEl.classList.add("drop-down-style");
+userInputNumberEl.setAttribute("value", "2");
+userInputNumberEl.setAttribute("min", "2");
+userInputNumberEl.setAttribute("max", "10");
+dropDownsDiv.appendChild(userInputNumberEl);
 
 document.body.appendChild(dropDownsDiv);
 document.body.appendChild(heading);
@@ -76,17 +76,79 @@ document.body.appendChild(patternContainer);
 
 let patternDropDown;
 
+function showPopUp(value) {
+  let userValue = value.toLowerCase();
+  if (document.getElementById("popUpDiv")) {
+    document.getElementById("popUpDiv").remove();
+  }
+  const popUpDiv = document.createElement("div");
+  popUpDiv.setAttribute("id", "popUpDiv");
+  popUpDiv.classList.add("popup-div-style");
+  popUpDiv.innerHTML = "";
+
+  const popUpDivContent = document.createElement("div");
+  popUpDivContent.setAttribute("id", "popUpDivContent");
+  popUpDivContent.classList.add("pop-up-flex");
+
+  let popUpList = popUpObject.find((item) => item.hasOwnProperty(userValue));
+  popUpList = popUpList[userValue];
+
+  if (userValue !== "shapes") {
+    for (let item of popUpList) {
+      let childDiv = document.createElement("div");
+      childDiv.textContent = `${item}`;
+      childDiv.setAttribute("id", `${item}`);
+      childDiv.setAttribute("value", `${item}`);
+      childDiv.classList.add("child-div");
+      popUpDivContent.appendChild(childDiv);
+    }
+  } else if (userValue === "shapes") {
+    for (let item of popUpList) {
+      let childDiv = document.createElement("div");
+      childDiv.setAttribute("id", `${item}`);
+      childDiv.setAttribute("value", `${item}`);
+      if (item === "Triangle") {
+        childDiv.classList.add("triangle-shape");
+      } else if (item === "Square") {
+        childDiv.classList.add("square-shape");
+      } else if (item === "Rectangle") {
+        childDiv.classList.add("rectangle-shape");
+      } else if (item === "Rhombus") {
+        childDiv.classList.add("rhombus-shape");
+      }
+      childDiv.classList.add("child-div");
+      popUpDivContent.appendChild(childDiv);
+    }
+  }
+  popUpDiv.appendChild(popUpDivContent);
+  popUpDivContent.addEventListener("click", (event) => {
+    event.stopPropagation();
+    if (event.target && event.target.classList.contains("child-div")) {
+      let value = event.target.getAttribute("value");
+      userChoseValue["firstSACNInput"] = value;
+    }
+  });
+
+  popUpDiv.style.display = "block";
+  popUpDiv.addEventListener("click", () => {
+    popUpDiv.style.display = "none";
+  });
+
+  document.body.appendChild(popUpDiv);
+}
+
 selectShapeDropDown.addEventListener("change", (event) => {
   let userSelectedValue = event.target.value;
+
   showPopUp(userSelectedValue);
   let existingPatternDropDown = document.querySelector(".pattern-drop-down");
   if (existingPatternDropDown) {
     existingPatternDropDown.remove();
   }
-  if (
-    userSelectedValue === "Shape" &&
-    !document.querySelector(".pattern-drop-down")
-  ) {
+  if (document.getElementById("genPattern")) {
+    document.getElementById("genPattern").remove();
+  }
+  if (!document.querySelector(".pattern-drop-down")) {
     const patternDropDown = document.createElement("select");
     patternDropDown.classList.add("pattern-drop-down", "drop-down-style");
 
@@ -98,7 +160,10 @@ selectShapeDropDown.addEventListener("change", (event) => {
     }
 
     patternDropDown.addEventListener("change", (event) => {
-      selectShapePattern(event.target.value);
+      const patternValue = event.target.value;
+      userChoseValue["shape"] = patternValue;
+      userChoseValue["Number"] = userInputNumberEl.value;
+      selectShapePattern(patternValue);
     });
 
     dropDownsDiv.appendChild(patternDropDown);
@@ -133,73 +198,15 @@ function selectShapePattern(value) {
   if (document.getElementById("genPattern")) {
     document.getElementById("genPattern").remove();
   }
+
   if (!document.querySelector("#genPattern")) {
     let submitButton = document.createElement("button");
     submitButton.setAttribute("id", "genPattern");
     submitButton.textContent = "Generate Pattern";
+    submitButton.addEventListener("click", () => {
+      userChoseValue["shapePattern"] = selectPatternEl.value;
+      console.log(userChoseValue);
+    });
     dropDownsDiv.appendChild(submitButton);
   }
 }
-
-function showPopUp(value) {
-  let userValue = value.toLowerCase();
-  if (document.getElementById("popUpDiv")) {
-    document.getElementById("popUpDiv").remove();
-  }
-  const popUpDiv = document.createElement("div");
-  popUpDiv.setAttribute("id", "popUpDiv");
-  popUpDiv.classList.add("popup-div-style");
-  popUpDiv.innerHTML = "";
-
-  const popUpDivContent = document.createElement("div");
-  popUpDivContent.setAttribute("id", "popUpDivContent");
-  popUpDivContent.classList.add("pop-up-flex");
-
-  let popUpList = popUpObject.find((item) => item.hasOwnProperty(userValue));
-  popUpList = popUpList[userValue];
-
-  if (userValue !== "shapes") {
-    for (let item of popUpList) {
-      let childDiv = document.createElement("div");
-      childDiv.textContent = `${item}`;
-      childDiv.setAttribute("id", `${item}`);
-      childDiv.setAttribute("value", `${item}`);
-      childDiv.classList.add("child-div");
-      popUpDivContent.appendChild(childDiv);
-    }
-  } else if (userValue === "shapes") {
-    for (let item of popUpList) {
-      let childDiv = document.createElement("div");
-      childDiv.setAttribute("id", `${item}`);
-      if (item === "Triangle") {
-        childDiv.classList.add("triangle-shape");
-      } else if (item === "Square") {
-        childDiv.classList.add("square-shape");
-      } else if (item === "Rectangle") {
-        childDiv.classList.add("rectangle-shape");
-      } else if (item === "Rhombus") {
-        childDiv.classList.add("rhombus-shape");
-      }
-      childDiv.classList.add("child-div");
-      popUpDivContent.appendChild(childDiv);
-    }
-  }
-  popUpDiv.appendChild(popUpDivContent);
-  popUpDiv.style.display = "block";
-
-  document.body.appendChild(popUpDiv);
-}
-
-const popUpDivValue = document.getElementById("popUpDivContent");
-popUpDivValue.addEventListener("click", (event) => {
-  if (event.target && event.target.classList.contains("child-div")) {
-    let value = event.target.getAttribute("value");
-    console.log(value);
-    event.stopPropagation();
-    document.getElementById("popUpDiv").style.display = "none";
-  }
-});
-
-document.getElementById("popUpDiv").addEventListener("click", () => {
-  document.getElementById("popUpDiv").style.display = "none";
-});
