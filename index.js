@@ -45,7 +45,9 @@ const patternDropDownValues = [
 const patternObject = [
   {
     Triangle: [
+      "Triangle",
       "Right Angle Triangle",
+      "Left Right Angle Triangle",
       "Hollow Right Angle",
       "Hollow Triangle",
       "Inverted Triangle",
@@ -99,6 +101,10 @@ function showPopUp(value) {
   let userValue = value.toLowerCase();
   if (document.getElementById("popUpDiv")) {
     document.getElementById("popUpDiv").remove();
+  }
+
+  if (document.querySelector(".shape-pattern-select")) {
+    document.querySelector(".shape-pattern-select").remove();
   }
   const popUpDiv = document.createElement("div");
   popUpDiv.setAttribute("id", "popUpDiv");
@@ -167,11 +173,14 @@ function showPopUp(value) {
       popUpDivContent.appendChild(childDiv);
     }
   }
+
+  // imp code down here , used concept Event Delegation
   popUpDiv.appendChild(popUpDivContent);
   popUpDivContent.addEventListener("click", (event) => {
     event.stopPropagation();
     if (event.target && event.target.classList.contains("child-div")) {
       let value = event.target.getAttribute("value");
+      console.log(value);
       userChoseValue["shapeContent"] = value;
     }
     popUpDiv.style.display = "none";
@@ -187,6 +196,8 @@ function showPopUp(value) {
 
 selectShapeDropDown.addEventListener("change", (event) => {
   let userSelectedValue = event.target.value;
+
+  userChoseValue = {};
 
   showPopUp(userSelectedValue);
   let existingPatternDropDown = document.querySelector(".pattern-drop-down");
@@ -254,7 +265,134 @@ function selectShapePattern(value) {
     submitButton.addEventListener("click", () => {
       userChoseValue["shapePattern"] = selectPatternEl.value;
       console.log(userChoseValue);
+      renderPatternInDiv(userChoseValue);
     });
     dropDownsDiv.appendChild(submitButton);
+  }
+}
+
+function renderPatternInDiv(userChoseValue) {
+  let { number, shape, shapeContent, shapePattern } = userChoseValue;
+  console.log(number, shape, shapeContent, shapePattern);
+  if (shapePattern === "Triangle") {
+    renderTrianglePattern(number, shapeContent);
+  } else if (shapePattern == "Right Angle Triangle") {
+    renderRightAngleTriangle(number, shapeContent);
+  } else if (shapePattern === "Filled Square") {
+    renderSquarePattern(number, shapeContent);
+  } else if (shapePattern === "Left Right Angle Triangle") {
+    renderLeftRightAngleTriangle(number, shapeContent);
+  }
+}
+
+function renderTrianglePattern(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.style.flexWrap = "";
+  patternContainer.style.alignContent = "";
+  patternContainer.style.justifyContent = "";
+  patternContainer.style.alignItems = "";
+  patternContainer.innerHTML = "";
+  if (shapeContent.length === 1) {
+    for (let i = 1; i <= parseInt(number); i++) {
+      let lineDiv = document.createElement("div");
+      lineDiv.style.display = "flex";
+
+      for (let j = 1; j <= i; j++) {
+        let contentDiv = document.createElement("div");
+        contentDiv.style.padding = "2px 2px";
+        contentDiv.textContent = shapeContent;
+        lineDiv.appendChild(contentDiv);
+      }
+      patternContainer.appendChild(lineDiv);
+    }
+  } else {
+    for (let i = 1; i <= parseInt(number); i++) {
+      let lineDiv = document.createElement("div");
+      lineDiv.style.display = "flex";
+      for (let j = 1; j <= i; j++) {
+        let contentDiv = document.createElement("div");
+        contentDiv.classList.add(shapeContent + "-shape");
+        lineDiv.appendChild(contentDiv);
+      }
+      patternContainer.appendChild(lineDiv);
+    }
+  }
+}
+
+function renderRightAngleTriangle(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+
+  for (let i = 1; i <= parseInt(number); i++) {
+    let lineDiv = document.createElement("div");
+    lineDiv.style.display = "flex";
+    for (let j = 1; j <= i; j++) {
+      let contentDiv = document.createElement("div");
+      contentDiv.style.padding = "4px";
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+      }
+      lineDiv.appendChild(contentDiv);
+    }
+    patternContainer.appendChild(lineDiv);
+    patternContainer.style.flexWrap = "wrap";
+    patternContainer.style.alignContent = "center";
+    patternContainer.style.justifyContent = "center";
+    patternContainer.style.alignItems = "flex-start";
+  }
+}
+
+function renderSquarePattern(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+
+  for (let i = 1; i <= number; i++) {
+    let lineDiv = document.createElement("div");
+    lineDiv.style.display = "flex";
+    for (let j = 1; j <= number; j++) {
+      let contentDiv = document.createElement("div");
+      contentDiv.style.padding = "4px";
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+      }
+      lineDiv.appendChild(contentDiv);
+    }
+    patternContainer.appendChild(lineDiv);
+  }
+}
+
+function renderLeftRightAngleTriangle(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+  for (let i = 1; i <= parseInt(number); i++) {
+    let lineDiv = document.createElement("div");
+    lineDiv.style.display = "flex";
+
+    for (let j = 1; j <= parseInt(number); j++) {
+      let contentDiv = document.createElement("div");
+      contentDiv.style.padding = "2px";
+      if (j <= number - i) {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+          contentDiv.style.color = "#0000ff00";
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+          contentDiv.style.borderColor = "#0000ff00";
+          contentDiv.style.background = "#0000ff00";
+        }
+      } else {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+        }
+      }
+      lineDiv.appendChild(contentDiv);
+    }
+    patternContainer.appendChild(lineDiv);
   }
 }
