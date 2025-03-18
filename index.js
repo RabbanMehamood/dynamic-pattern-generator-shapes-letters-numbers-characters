@@ -286,10 +286,14 @@ function renderPatternInDiv(userChoseValue) {
     renderRightAngleTriangle(number, shapeContent);
   } else if (shapePattern == "Inverted Triangle(Mirror Pyramind Pattern)") {
     renderMirrorPyramid(number, shapeContent);
-  } else if ((shapePattern = "Inverted Left Angle Triangle")) {
+  } else if (shapePattern === "Inverted Left Angle Triangle") {
     renderInvertedLeftAngleTriangle(number, shapeContent);
-  } else if ((shapePattern = "Inverted Right Angle Triangle")) {
-    renderInvertedRightAngleTriangle(number, shapePattern);
+  } else if (shapePattern === "Inverted Right Angle Triangle") {
+    renderInvertedRightAngleTriangle(number, shapeContent);
+  } else if (shapePattern === "Hollow Square") {
+    renderHollowSquare(number, shapeContent);
+  } else if (shapePattern === "Filled Diamond") {
+    renderFilledDiamond(number, shapeContent);
   }
 }
 
@@ -467,6 +471,7 @@ function renderInvertedLeftAngleTriangle(number, shapeContent) {
     patternContainer.style.placeContent = "center";
   }
 }
+
 function renderInvertedRightAngleTriangle(number, shapeContent) {
   let patternContainer = document.getElementById("patternContainer");
   patternContainer.innerHTML = "";
@@ -496,5 +501,98 @@ function renderInvertedRightAngleTriangle(number, shapeContent) {
     patternContainer.style.alignItems = "flex-end";
     patternContainer.style.flexWrap = "wrap";
     patternContainer.style.placeContent = "center";
+  }
+}
+
+function renderHollowSquare(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+  number = parseInt(number);
+  for (let i = 1; i <= number; i++) {
+    let lineDiv = document.createElement("div");
+    lineDiv.style.display = "flex";
+    for (let j = 1; j <= number; j++) {
+      let contentDiv = document.createElement("div");
+      if (i === 1 || i === number || j === 1 || j === number) {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+        }
+      } else {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+          contentDiv.style.color = "#0000ff00";
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+          contentDiv.style.borderColor = "#0000ff00";
+          contentDiv.style.background = "#0000ff00";
+        }
+      }
+      lineDiv.appendChild(contentDiv);
+    }
+    patternContainer.appendChild(lineDiv);
+  }
+}
+
+function renderFilledDiamond(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+  number = parseInt(number);
+
+  // First for loop for upper pyramid
+  for (let i = 1; i <= number; i++) {
+    let levelDiv = document.createElement("div");
+    levelDiv.style.display = "flex";
+    for (let j = 1; j <= number - i; j++) {
+      let contentDiv = document.createElement("div");
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+        contentDiv.style.color = "#0000ff00";
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+        contentDiv.style.borderColor = "#0000ff00";
+        contentDiv.style.background = "#0000ff00";
+      }
+      levelDiv.appendChild(contentDiv);
+    }
+    for (let j = 1; j <= 2 * i - 1; j++) {
+      let contentDiv = document.createElement("div");
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+      }
+      levelDiv.appendChild(contentDiv);
+    }
+    patternContainer.appendChild(levelDiv);
+  }
+
+  // second for loop for the lower inverted pyramid
+  for (let i = number - 1; i >= 1; i--) {
+    let levelDiv = document.createElement("div");
+    for (let j = 1; j <= number - i; j++) {
+      let contentDiv = document.createElement("div");
+      levelDiv.style.display = "flex";
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+        contentDiv.style.color = "#0000ff00";
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+        contentDiv.style.borderColor = "#0000ff00";
+        contentDiv.style.background = "#0000ff00";
+      }
+      levelDiv.appendChild(contentDiv);
+    }
+    for (let j = 1; j <= 2 * i - 1; j++) {
+      let contentDiv = document.createElement("div");
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+      }
+      levelDiv.appendChild(contentDiv);
+    }
+    patternContainer.appendChild(levelDiv);
   }
 }
