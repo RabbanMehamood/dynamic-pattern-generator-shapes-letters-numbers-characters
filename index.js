@@ -45,14 +45,16 @@ const patternDropDownValues = [
 const patternObject = [
   {
     Triangle: [
-      "Triangle",
+      "Triangle(Pyramid Pattern)",
+      "Left Angle Triangle",
       "Right Angle Triangle",
-      "Left Right Angle Triangle",
-      "Hollow Right Angle",
-      "Hollow Triangle",
-      "Inverted Triangle",
-      "Mirrored Right Angle Triangle",
-      "Hollow Inverted Triangle",
+      "Inverted Triangle(Mirror Pyramind Pattern)",
+      "Inverted Right Angle Triangle",
+      "Inverted Left Angle Triangle",
+      "Hollow Pyramid Pattern",
+      "Hollow Right Angle Triangle",
+      "Hollow Left Angle Triangle",
+      "Hollow Inverted Pyramid",
     ],
   },
   { Square: ["Filled Square", "Hollow Square", "Square With Diagonals"] },
@@ -274,14 +276,20 @@ function selectShapePattern(value) {
 function renderPatternInDiv(userChoseValue) {
   let { number, shape, shapeContent, shapePattern } = userChoseValue;
   console.log(number, shape, shapeContent, shapePattern);
-  if (shapePattern === "Triangle") {
+  if (shapePattern === "Triangle(Pyramid Pattern)") {
     renderTrianglePattern(number, shapeContent);
-  } else if (shapePattern == "Right Angle Triangle") {
-    renderRightAngleTriangle(number, shapeContent);
+  } else if (shapePattern == "Left Angle Triangle") {
+    renderLeftAngleTriangle(number, shapeContent);
   } else if (shapePattern === "Filled Square") {
     renderSquarePattern(number, shapeContent);
-  } else if (shapePattern === "Left Right Angle Triangle") {
-    renderLeftRightAngleTriangle(number, shapeContent);
+  } else if (shapePattern === "Right Angle Triangle") {
+    renderRightAngleTriangle(number, shapeContent);
+  } else if (shapePattern == "Inverted Triangle(Mirror Pyramind Pattern)") {
+    renderMirrorPyramid(number, shapeContent);
+  } else if ((shapePattern = "Inverted Left Angle Triangle")) {
+    renderInvertedLeftAngleTriangle(number, shapeContent);
+  } else if ((shapePattern = "Inverted Right Angle Triangle")) {
+    renderInvertedRightAngleTriangle(number, shapePattern);
   }
 }
 
@@ -319,7 +327,7 @@ function renderTrianglePattern(number, shapeContent) {
   }
 }
 
-function renderRightAngleTriangle(number, shapeContent) {
+function renderLeftAngleTriangle(number, shapeContent) {
   let patternContainer = document.getElementById("patternContainer");
   patternContainer.innerHTML = "";
 
@@ -365,7 +373,7 @@ function renderSquarePattern(number, shapeContent) {
   }
 }
 
-function renderLeftRightAngleTriangle(number, shapeContent) {
+function renderRightAngleTriangle(number, shapeContent) {
   let patternContainer = document.getElementById("patternContainer");
   patternContainer.innerHTML = "";
   for (let i = 1; i <= parseInt(number); i++) {
@@ -394,5 +402,99 @@ function renderLeftRightAngleTriangle(number, shapeContent) {
       lineDiv.appendChild(contentDiv);
     }
     patternContainer.appendChild(lineDiv);
+  }
+}
+
+function renderMirrorPyramid(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+  for (let i = number; i >= 1; i--) {
+    let lineDiv = document.createElement("div");
+    lineDiv.style.display = "flex";
+    for (let j = 1; j <= number - i; j++) {
+      let contentDiv = document.createElement("div");
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = " ";
+        contentDiv.style.color = "#0000ff00";
+      } else {
+        contentDiv.textContent = " ";
+      }
+      lineDiv.appendChild(contentDiv);
+    }
+    for (let j = 1; j <= 2 * i - 1; j++) {
+      let contentDiv = document.createElement("div");
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+      }
+      lineDiv.appendChild(contentDiv);
+    }
+    patternContainer.appendChild(lineDiv);
+    patternContainer.style.alignItems = "";
+  }
+}
+
+function renderInvertedLeftAngleTriangle(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+  for (let i = number; i >= 1; i--) {
+    let lineDiv = document.createElement("div");
+    lineDiv.style.display = "flex";
+    for (let j = 1; j <= number - i; j++) {
+      let contentDiv = document.createElement("div");
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = " ";
+        contentDiv.style.color = "#0000ff00";
+      } else {
+        contentDiv.textContent = " ";
+      }
+      lineDiv.appendChild(contentDiv);
+    }
+    for (let j = 1; j <= 2 * i - 1; j++) {
+      let contentDiv = document.createElement("div");
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+      }
+      lineDiv.appendChild(contentDiv);
+    }
+    patternContainer.appendChild(lineDiv);
+
+    patternContainer.style.alignItems = "flex-start";
+    patternContainer.style.flexWrap = "wrap";
+    patternContainer.style.placeContent = "center";
+  }
+}
+function renderInvertedRightAngleTriangle(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+  for (let i = number; i >= 1; i--) {
+    let lineDiv = document.createElement("div");
+    lineDiv.style.display = "flex";
+    for (let j = 1; j <= number - i; j++) {
+      let contentDiv = document.createElement("div");
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = " ";
+        contentDiv.style.color = "#0000ff00";
+      } else {
+        contentDiv.textContent = " ";
+      }
+      lineDiv.appendChild(contentDiv);
+    }
+    for (let j = 1; j <= 2 * i - 1; j++) {
+      let contentDiv = document.createElement("div");
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+      }
+      lineDiv.appendChild(contentDiv);
+    }
+    patternContainer.appendChild(lineDiv);
+    patternContainer.style.alignItems = "flex-end";
+    patternContainer.style.flexWrap = "wrap";
+    patternContainer.style.placeContent = "center";
   }
 }
