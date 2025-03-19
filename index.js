@@ -38,7 +38,7 @@ const patternDropDownValues = [
   "Triangle",
   "Square",
   "Diamond",
-  "Rectangle",
+  "Hourglass",
   "Rhombus",
 ];
 
@@ -52,15 +52,22 @@ const patternObject = [
       "Inverted Right Angle Triangle",
       "Inverted Left Angle Triangle",
       "Hollow Pyramid Pattern",
-      "Hollow Right Angle Triangle",
-      "Hollow Left Angle Triangle",
+      "Hollow Inverted Right Angle Triangle",
+      "Hollow Inverted Left Angle Triangle",
       "Hollow Inverted Pyramid",
     ],
   },
-  { Square: ["Filled Square", "Hollow Square", "Square With Diagonals"] },
-  { Diamond: ["Filled Diamond", "Hollow Diamond"] },
-  { Rectangle: ["Filled Rectangle", "Hollow Rectangle"] },
-  { Rhombus: ["Filled Rhombus", "Hollow Rhombus"] },
+  { Square: ["Filled Square", "Hollow Square"] },
+  { Diamond: ["Filled Diamond", "Half Diamond", "Hollow Diamond"] },
+  { Hourglass: ["Hourglass", "X-Pattern"] },
+  {
+    Rhombus: [
+      "Filled Rhombus",
+      "Mirror Rhombus",
+      "Hollow Rhombus",
+      "Mirror Hollow Rhombus",
+    ],
+  },
 ];
 
 let userChoseValue = new Object();
@@ -294,6 +301,30 @@ function renderPatternInDiv(userChoseValue) {
     renderHollowSquare(number, shapeContent);
   } else if (shapePattern === "Filled Diamond") {
     renderFilledDiamond(number, shapeContent);
+  } else if (shapePattern === "Filled Rhombus") {
+    renderFilledRhombus(number, shapeContent);
+  } else if (shapePattern === "Hollow Pyramid Pattern") {
+    renderHollowPyramid(number, shapeContent);
+  } else if (shapePattern === "Hourglass") {
+    renderHourGlass(number, shapeContent);
+  } else if (shapePattern === "Half Diamond") {
+    renderHalfDiamond(number, shapeContent);
+  } else if (shapePattern === "Hollow Inverted Pyramid") {
+    renderInvertedHollowPyramid(number, shapeContent);
+  } else if (shapePattern === "Hollow Inverted Right Angle Triangle") {
+    renderHollowInvertedRightAngleTriangle(number, shapeContent);
+  } else if (shapePattern === "Hollow Inverted Left Angle Triangle") {
+    renderHollowInvertedLeftAngleTriangle(number, shapeContent);
+  } else if (shapePattern === "X-Pattern") {
+    renderXpattern(number, shapeContent);
+  } else if (shapePattern === "Hollow Diamond") {
+    renderHollowDiamondPattern(number, shapeContent);
+  } else if (shapePattern === "Mirror Rhombus") {
+    renderMirrorRhombus(number, shapeContent);
+  } else if (shapePattern === "Hollow Rhombus") {
+    renderHollowRhombus(number, shapeContent);
+  } else if (shapePattern === "Mirror Hollow Rhombus") {
+    renderMirrorHollowRhombus(number, shapeContent);
   }
 }
 
@@ -544,6 +575,7 @@ function renderFilledDiamond(number, shapeContent) {
   for (let i = 1; i <= number; i++) {
     let levelDiv = document.createElement("div");
     levelDiv.style.display = "flex";
+
     for (let j = 1; j <= number - i; j++) {
       let contentDiv = document.createElement("div");
       if (shapeContent.length === 1) {
@@ -592,6 +624,546 @@ function renderFilledDiamond(number, shapeContent) {
         contentDiv.classList.add(shapeContent + "-shape");
       }
       levelDiv.appendChild(contentDiv);
+    }
+    patternContainer.appendChild(levelDiv);
+  }
+  patternContainer.style.alignItems = "flex-start";
+  patternContainer.style.placeContent = "center";
+  patternContainer.style.flexWrap = "wrap";
+}
+
+function renderFilledRhombus(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+  number = parseInt(number);
+  for (let i = 1; i <= number; i++) {
+    let levelDiv = document.createElement("div");
+    for (let j = 1; j <= number - i; j++) {
+      let contentDiv = document.createElement("div");
+      levelDiv.style.display = "flex";
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+        contentDiv.style.color = "#0000ff00";
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+        contentDiv.style.borderColor = "#0000ff00";
+        contentDiv.style.background = "#0000ff00";
+      }
+      levelDiv.appendChild(contentDiv);
+    }
+    for (let j = 1; j <= number; j++) {
+      let contentDiv = document.createElement("div");
+      levelDiv.style.display = "flex";
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+      }
+      levelDiv.appendChild(contentDiv);
+    }
+    patternContainer.appendChild(levelDiv);
+  }
+}
+
+function renderHollowPyramid(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+  number = parseInt(number);
+  for (let i = 1; i <= number; i++) {
+    let levelDiv = document.createElement("div");
+    levelDiv.style.display = "flex";
+    for (let j = 1; j <= number - i; j++) {
+      let contentDiv = document.createElement("div");
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+        contentDiv.style.color = "#0000ff00";
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+        contentDiv.style.borderColor = "#0000ff00";
+        contentDiv.style.background = "#0000ff00";
+      }
+      levelDiv.appendChild(contentDiv);
+    }
+    for (let j = 1; j <= 2 * i - 1; j++) {
+      let contentDiv = document.createElement("div");
+      if (j === 1 || j === 2 * i - 1 || i === number) {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+        }
+      } else {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+          contentDiv.style.color = "#0000ff00";
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+          contentDiv.style.borderColor = "#0000ff00";
+          contentDiv.style.background = "#0000ff00";
+        }
+      }
+      levelDiv.appendChild(contentDiv);
+    }
+    patternContainer.appendChild(levelDiv);
+  }
+}
+
+function renderHourGlass(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+  number = parseInt(number);
+
+  // for loop for upper Pyramid
+  for (let i = 1; i <= number; i++) {
+    let levelDiv = document.createElement("div");
+    levelDiv.style.display = "flex";
+    for (let j = 1; j <= 2 * number - 1; j++) {
+      let contentDiv = document.createElement("div");
+      if (j >= i && j <= 2 * number - i) {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+        }
+        levelDiv.appendChild(contentDiv);
+      } else {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+          contentDiv.style.color = "#0000ff00";
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+          contentDiv.style.borderColor = "#0000ff00";
+          contentDiv.style.background = "#0000ff00";
+        }
+        levelDiv.appendChild(contentDiv);
+      }
+      patternContainer.appendChild(levelDiv);
+    }
+  }
+
+  // for loop for lower Pyramid
+  for (let i = number - 1; i >= 1; i--) {
+    let levelDiv = document.createElement("div");
+    levelDiv.style.display = "flex";
+    for (let j = 1; j <= 2 * number - 1; j++) {
+      let contentDiv = document.createElement("div");
+      if (j >= i && j <= 2 * number - i) {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+        }
+        levelDiv.appendChild(contentDiv);
+      } else {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+          contentDiv.style.color = "#0000ff00";
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+          contentDiv.style.borderColor = "#0000ff00";
+          contentDiv.style.background = "#0000ff00";
+        }
+        levelDiv.appendChild(contentDiv);
+      }
+      patternContainer.appendChild(levelDiv);
+    }
+  }
+}
+
+function renderHalfDiamond(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+  number = parseInt(number);
+
+  // for loop for left aligned right angle triangle
+  for (let i = 1; i <= number; i++) {
+    let levelDiv = document.createElement("div");
+    levelDiv.style.display = "flex";
+
+    for (let j = 1; j <= i; j++) {
+      let contentDiv = document.createElement("div");
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+      }
+      levelDiv.appendChild(contentDiv);
+    }
+    patternContainer.appendChild(levelDiv);
+  }
+
+  // for loop for inverted right angle triangle
+  for (let i = number - 1; i >= 1; i--) {
+    let levelDiv = document.createElement("div");
+    levelDiv.style.display = "flex";
+
+    for (let j = 1; j <= i; j++) {
+      let contentDiv = document.createElement("div");
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+      }
+      levelDiv.appendChild(contentDiv);
+    }
+    patternContainer.appendChild(levelDiv);
+  }
+}
+
+function renderInvertedHollowPyramid(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+  number = parseInt(number);
+
+  for (let i = number; i >= 1; i--) {
+    let levelDiv = document.createElement("div");
+    levelDiv.style.display = "flex";
+    for (let j = 1; j <= number - i; j++) {
+      let contentDiv = document.createElement("div");
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+        contentDiv.style.color = "#0000ff00";
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+        contentDiv.style.borderColor = "#0000ff00";
+        contentDiv.style.background = "#0000ff00";
+      }
+      levelDiv.appendChild(contentDiv);
+    }
+
+    for (let j = 1; j <= 2 * i - 1; j++) {
+      let contentDiv = document.createElement("div");
+      if (j === 1 || j === 2 * i - 1 || i === number) {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+        }
+        levelDiv.appendChild(contentDiv);
+      } else {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+          contentDiv.style.color = "#0000ff00";
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+          contentDiv.style.borderColor = "#0000ff00";
+          contentDiv.style.background = "#0000ff00";
+        }
+        levelDiv.appendChild(contentDiv);
+      }
+    }
+    patternContainer.appendChild(levelDiv);
+    patternContainer.style.alignItems = "flex-start";
+  }
+}
+
+function renderHollowInvertedRightAngleTriangle(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+  number = parseInt(number);
+  for (let i = number; i >= 1; i--) {
+    let levelDiv = document.createElement("div");
+    levelDiv.style.display = "flex";
+    for (let j = 1; j <= i; j++) {
+      let contentDiv = document.createElement("div");
+      if (j === 1 || j === i || i === number) {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+        }
+        levelDiv.appendChild(contentDiv);
+      } else {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+          contentDiv.style.color = "#0000ff00";
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+          contentDiv.style.borderColor = "#0000ff00";
+          contentDiv.style.background = "#0000ff00";
+        }
+        levelDiv.appendChild(contentDiv);
+      }
+    }
+    patternContainer.appendChild(levelDiv);
+    patternContainer.style.flexWrap = "wrap";
+    patternContainer.style.placeContent = "center";
+    patternContainer.style.alignItems = "flex-end";
+  }
+}
+
+function renderHollowInvertedLeftAngleTriangle(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+  number = parseInt(number);
+  for (let i = number; i >= 1; i--) {
+    let levelDiv = document.createElement("div");
+    levelDiv.style.display = "flex";
+    for (let j = 1; j <= i; j++) {
+      let contentDiv = document.createElement("div");
+      if (j === 1 || j === i || i === number) {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+        }
+        levelDiv.appendChild(contentDiv);
+      } else {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+          contentDiv.style.color = "#0000ff00";
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+          contentDiv.style.borderColor = "#0000ff00";
+          contentDiv.style.background = "#0000ff00";
+        }
+        levelDiv.appendChild(contentDiv);
+      }
+    }
+    patternContainer.appendChild(levelDiv);
+    patternContainer.style.flexWrap = "wrap";
+    patternContainer.style.alignItems = "self-start";
+    patternContainer.style.placeContent = "center";
+  }
+}
+
+function renderXpattern(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+  number = parseInt(number);
+
+  for (let i = 1; i <= number; i++) {
+    let levelDiv = document.createElement("div");
+    levelDiv.style.display = "flex";
+    for (let j = 1; j <= number; j++) {
+      let contentDiv = document.createElement("div");
+      if (j === i || j === number - i + 1) {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+        }
+        levelDiv.appendChild(contentDiv);
+      } else {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+          contentDiv.style.color = "#0000ff00";
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+          contentDiv.style.borderColor = "#0000ff00";
+          contentDiv.style.background = "#0000ff00";
+        }
+        levelDiv.appendChild(contentDiv);
+      }
+    }
+    patternContainer.appendChild(levelDiv);
+  }
+}
+
+function renderHollowDiamondPattern(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+  number = parseInt(number);
+  for (let i = 1; i <= number; i++) {
+    let levelDiv = document.createElement("div");
+    levelDiv.style.display = "flex";
+    for (let j = 1; j <= number - i; j++) {
+      let contentDiv = document.createElement("div");
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+        contentDiv.style.color = "#0000ff00";
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+        contentDiv.style.borderColor = "#0000ff00";
+        contentDiv.style.background = "#0000ff00";
+      }
+      levelDiv.appendChild(contentDiv);
+    }
+    for (let j = 1; j <= 2 * i - 1; j++) {
+      let contentDiv = document.createElement("div");
+      if (j === 1 || j === 2 * i - 1) {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+        }
+        levelDiv.appendChild(contentDiv);
+      } else {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+          contentDiv.style.color = "#0000ff00";
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+          contentDiv.style.borderColor = "#0000ff00";
+          contentDiv.style.background = "#0000ff00";
+        }
+        levelDiv.appendChild(contentDiv);
+      }
+    }
+    patternContainer.appendChild(levelDiv);
+  }
+
+  for (let i = number - 1; i >= 1; i--) {
+    let levelDiv = document.createElement("div");
+    levelDiv.style.display = "flex";
+    for (let j = 1; j <= number - i; j++) {
+      let contentDiv = document.createElement("div");
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+        contentDiv.style.color = "#0000ff00";
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+        contentDiv.style.borderColor = "#0000ff00";
+        contentDiv.style.background = "#0000ff00";
+      }
+      levelDiv.appendChild(contentDiv);
+    }
+    for (let j = 1; j <= 2 * i - 1; j++) {
+      let contentDiv = document.createElement("div");
+      if (j === 1 || j === 2 * i - 1) {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+        }
+        levelDiv.appendChild(contentDiv);
+      } else {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+          contentDiv.style.color = "#0000ff00";
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+          contentDiv.style.borderColor = "#0000ff00";
+          contentDiv.style.background = "#0000ff00";
+        }
+        levelDiv.appendChild(contentDiv);
+      }
+    }
+    patternContainer.appendChild(levelDiv);
+    patternContainer.style.alignItems = "baseline";
+    patternContainer.style.flexWrap = "wrap";
+    patternContainer.style.placeContent = "center";
+  }
+}
+
+function renderMirrorRhombus(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+  number = parseInt(number);
+
+  for (let i = number; i >= 1; i--) {
+    let levelDiv = document.createElement("div");
+    levelDiv.style.display = "flex";
+    for (let j = 1; j <= number - i; j++) {
+      let contentDiv = document.createElement("div");
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+        contentDiv.style.color = "#0000ff00";
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+        contentDiv.style.borderColor = "#0000ff00";
+        contentDiv.style.background = "#0000ff00";
+      }
+      levelDiv.appendChild(contentDiv);
+    }
+    for (let j = 1; j <= number; j++) {
+      let contentDiv = document.createElement("div");
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+      }
+      levelDiv.appendChild(contentDiv);
+    }
+    patternContainer.appendChild(levelDiv);
+  }
+}
+
+function renderHollowRhombus(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+  number = parseInt(number);
+
+  for (let i = 1; i <= number; i++) {
+    let levelDiv = document.createElement("div");
+    levelDiv.style.display = "flex";
+    for (let j = 1; j <= number - i; j++) {
+      let contentDiv = document.createElement("div");
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+        contentDiv.style.color = "#0000ff00";
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+        contentDiv.style.borderColor = "#0000ff00";
+        contentDiv.style.background = "#0000ff00";
+      }
+      levelDiv.appendChild(contentDiv);
+    }
+    for (let j = 1; j <= number; j++) {
+      let contentDiv = document.createElement("div");
+      if (j === 1 || j === number || i === 1 || i === number) {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+        }
+        levelDiv.appendChild(contentDiv);
+      } else {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+          contentDiv.style.color = "#0000ff00";
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+          contentDiv.style.borderColor = "#0000ff00";
+          contentDiv.style.background = "#0000ff00";
+        }
+        levelDiv.appendChild(contentDiv);
+      }
+    }
+    patternContainer.appendChild(levelDiv);
+  }
+}
+
+function renderMirrorHollowRhombus(number, shapeContent) {
+  let patternContainer = document.getElementById("patternContainer");
+  patternContainer.innerHTML = "";
+  number = parseInt(number);
+
+  for (let i = 1; i <= number; i++) {
+    let levelDiv = document.createElement("div");
+    levelDiv.style.display = "flex";
+    for (let j = 1; j < i; j++) {
+      let contentDiv = document.createElement("div");
+      if (shapeContent.length === 1) {
+        contentDiv.textContent = shapeContent;
+        contentDiv.style.color = "#0000ff00";
+      } else {
+        contentDiv.classList.add(shapeContent + "-shape");
+        contentDiv.style.borderColor = "#0000ff00";
+        contentDiv.style.background = "#0000ff00";
+      }
+      levelDiv.appendChild(contentDiv);
+    }
+    for (let j = 1; j <= number; j++) {
+      let contentDiv = document.createElement("div");
+      if (j === 1 || j === number || i === 1 || i === number) {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+        }
+        levelDiv.appendChild(contentDiv);
+      } else {
+        if (shapeContent.length === 1) {
+          contentDiv.textContent = shapeContent;
+          contentDiv.style.color = "#0000ff00";
+        } else {
+          contentDiv.classList.add(shapeContent + "-shape");
+          contentDiv.style.borderColor = "#0000ff00";
+          contentDiv.style.background = "#0000ff00";
+        }
+        levelDiv.appendChild(contentDiv);
+      }
     }
     patternContainer.appendChild(levelDiv);
   }
